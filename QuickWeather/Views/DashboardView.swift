@@ -6,31 +6,35 @@
 //
 
 import SwiftUI
+import CoreData
 
 struct DashboardView: View {
     @StateObject private var viewModel = DashboardListViewModel()
     @StateObject private var searchViewModel = SearchLocationViewModel()
+    @FetchRequest(sortDescriptors: []) var locations: FetchedResults<Location>
+    @Environment(\.managedObjectContext) private var moc
+    @State private var isShowingSheet = false
     
     var body: some View {
         VStack {
-            TextField(
-                "Enter location",
-                text: $searchViewModel.text
-            ).onSubmit {
-//                viewModel.addLocation()
+            HStack {
+                Text("Locations")
+                ClickableReadOnlyTextField(placeholder: "Search...", action: {
+                    isShowingSheet.toggle()
+                })                
             }
             
-            List(viewModel.locations) { location in
-                Text(location.name)
+            List(locations) { location in
+                Text(location.name ?? "Unknown")
             }
             
-            List(searchViewModel.result?.results ?? []) { result in
-                Text(result.name)
+            .sheet(isPresented: $isShowingSheet) {
+                SearchLocation()
             }
         }
     }
 }
 
 #Preview {
-    DashboardView()
+    DashboardView().environment(\.managedObjectContext, LocationsControllerMock.preview.container.viewContext)
 }

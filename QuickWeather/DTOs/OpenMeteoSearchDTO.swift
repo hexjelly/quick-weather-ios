@@ -18,4 +18,5 @@ struct OpenMeteoSearchItemDTO: Decodable, Identifiable {
     var longitude: Float64
     var elevation: Float64
     var country_code: String
+    var country: String
 }

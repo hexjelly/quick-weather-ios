@@ -8,9 +8,5 @@
 import Foundation
 
 class DashboardListViewModel: ObservableObject {
-    @Published var locations: [Location] = []
-    
-    func addLocation(location: String) {
-        locations.append(Location(name: location))
-    }
+
 }
