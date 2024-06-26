@@ -11,20 +11,22 @@ struct ClickableReadOnlyTextField: View {
     var placeholder: String
     var action: () -> Void
 
-    @State private var text: String = ""
-
     var body: some View {
         ZStack {
-            TextField(placeholder, text: $text)
+            TextField(placeholder, text: .constant(""))
+                .opacity(0)
                 .disabled(true)
-                .textFieldStyle(RoundedBorderTextFieldStyle())
-                .padding()
+
+            HStack {
+                Text(placeholder).foregroundColor(.secondary)
+                Spacer()
+            }
+            .background(RoundedRectangle(cornerRadius: 8).fill(Color.white))
 
             Button(action: action) {
-                // Make the button invisible but clickable
                 Color.clear
             }
-        }
+        }.fixedSize(horizontal: false, vertical: /*@START_MENU_TOKEN@*/true/*@END_MENU_TOKEN@*/)
     }
 }
 

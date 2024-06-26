@@ -25,10 +25,10 @@ struct SearchLocation: View {
             TextField(
                 "",
                 text: $searchViewModel.text,
-                prompt: Text("Enter location").foregroundColor(.secondary)
+                prompt: Text("Search location...").foregroundColor(.secondary)
             ).padding(.horizontal, 20)
                 .padding(.bottom, 10)
-                .background(Color.secondary).foregroundColor(.black).focused($isFocused)
+                .focused($isFocused)
 
             List(searchViewModel.result?.results ?? []) { result in
                 HStack {

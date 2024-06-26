@@ -19,7 +19,7 @@ struct DashboardView: View {
         VStack {
             HStack {
                 Text("Locations")
-                ClickableReadOnlyTextField(placeholder: "Search...", action: {
+                ClickableReadOnlyTextField(placeholder: "Search location...", action: {
                     isShowingSheet.toggle()
                 })                
             }
