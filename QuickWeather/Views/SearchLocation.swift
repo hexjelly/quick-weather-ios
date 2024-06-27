@@ -25,7 +25,7 @@ struct SearchLocation: View {
             TextField(
                 "",
                 text: $searchViewModel.text,
-                prompt: Text("Search location...").foregroundColor(.secondary)
+                prompt: Text(String(localized: "search_placeholder")).foregroundColor(.secondary)
             ).padding(.horizontal, 20)
                 .padding(.bottom, 10)
                 .focused($isFocused)
@@ -38,6 +38,7 @@ struct SearchLocation: View {
                 }
             }
         }
+        .padding()
         .onAppear {
                     DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
                         isFocused = true

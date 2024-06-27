@@ -5,32 +5,35 @@
 //  Created by Roger Andersen on 25.06.2024.
 //
 
-import SwiftUI
 import CoreData
+import SwiftUI
 
 struct DashboardView: View {
     @StateObject private var viewModel = DashboardListViewModel()
-    @StateObject private var searchViewModel = SearchLocationViewModel()
     @FetchRequest(sortDescriptors: []) var locations: FetchedResults<Location>
     @Environment(\.managedObjectContext) private var moc
-    @State private var isShowingSheet = false
     
+    @State private var isShowingSheet = false
+
     var body: some View {
         VStack {
-            HStack {
-                Text("Locations")
-                ClickableReadOnlyTextField(placeholder: "Search location...", action: {
+            ClickableReadOnlyTextField(
+                placeholder: String(localized: "search_placeholder"),
+                action: {
                     isShowingSheet.toggle()
-                })                
+                }
+            )
+            .padding(.horizontal, 10)
+            .opacity(isShowingSheet ? 0 : 1)
+
+            VStack {
+                List(locations) { location in
+                    Text(location.name ?? "Unknown")
+                }
             }
-            
-            List(locations) { location in
-                Text(location.name ?? "Unknown")
-            }
-            
-            .sheet(isPresented: $isShowingSheet) {
-                SearchLocation()
-            }
+        }
+        .sheet(isPresented: $isShowingSheet) {
+            SearchLocation()
         }
     }
 }
